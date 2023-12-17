@@ -5,6 +5,16 @@ import { OpenAI } from "langchain/llms/openai";
 import { PromptTemplate } from "langchain/prompts";
 import { LLMChain } from "langchain/chains";
 import LyricsPage from "../lyricsPage/LyricsPage";
+import * as yup from "yup";
+
+const validationSchema = yup.object().shape({
+  theirName: yup
+    .string()
+    .trim()
+    .min(3, "Must be at least 3 words")
+    .max(20, "Must be at max 20 words")
+    .required("Name is required"),
+});
 
 const UserDetailPage = () => {
   const [currentForm, setCurrentForm] = useState<number>(0);
@@ -71,7 +81,11 @@ The lyrics generated should be completely unique and never written before every 
     setCurrentForm((pre) => pre + 1);
   };
   const formStep = [
-    <FirstUserDetail next={handleNext} data={formValue} />,
+    <FirstUserDetail
+      next={handleNext}
+      data={formValue}
+      validationSchema={validationSchema}
+    />,
     <SecondUserDetail
       next={handleNext}
       data={formValue}

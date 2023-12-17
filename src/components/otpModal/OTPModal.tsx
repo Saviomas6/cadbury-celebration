@@ -65,6 +65,7 @@ const OTPModal = ({
             border={`1px solid ${theme.buttonColor}`}
             type="button"
             onClick={handlePinSubmit}
+            disabled={confirmWalletPin?.length !== 4}
           />
         </ConfirmModalButtonContainer>
       </ModalContainer>

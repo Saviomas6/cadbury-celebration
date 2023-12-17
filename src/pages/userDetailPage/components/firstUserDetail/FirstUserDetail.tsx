@@ -1,4 +1,4 @@
-import { Form, Formik } from "formik";
+import { ErrorMessage, Form, Formik } from "formik";
 import {
   FirstUserDetailContainer,
   FirstUserDetailImage,
@@ -15,6 +15,7 @@ import {
   UserDetailToggleContainer,
 } from "../../style";
 import {
+  ErrorMessageText,
   OpacityAnimation,
   TextLabel,
   ToneImage,
@@ -28,7 +29,7 @@ import { useEffect, useState } from "react";
 import tone from "../../../../assets/images/Purple tone.png";
 import yellowTone from "../../../../assets/images/Yellow tone.png";
 
-const FirstUserDetail = ({ next, data }: any) => {
+const FirstUserDetail = ({ next, data, validationSchema }: any) => {
   const [genderToggle, setGenderToggle] = useState<string>("Male");
   const [ageCount, setAgeCount] = useState<number>(18);
 
@@ -38,8 +39,11 @@ const FirstUserDetail = ({ next, data }: any) => {
 
   return (
     <OpacityAnimation>
-      <Formik initialValues={data} onSubmit={handleSubmitForm}>
-        {({ setFieldValue }) => {
+      <Formik
+        initialValues={data}
+        onSubmit={handleSubmitForm}
+        validationSchema={validationSchema}>
+        {({ setFieldValue, isValid, dirty }) => {
           useEffect(() => {
             setFieldValue("gender", genderToggle);
           }, [genderToggle]);
@@ -65,6 +69,9 @@ const FirstUserDetail = ({ next, data }: any) => {
                       placeholder="Name"
                     />
                   </InputFieldContainer>
+                  <ErrorMessageText>
+                    <ErrorMessage name="theirName" />
+                  </ErrorMessageText>
                 </InputFieldMainContainer>
                 <InputFieldMainContainer>
                   <InputFieldLabel>
@@ -79,7 +86,11 @@ const FirstUserDetail = ({ next, data }: any) => {
                       <IoMdArrowDropdownCircle />
                     </UserDetailToggleButton>
                     <UserDetailToggleButton
-                      onClick={() => setAgeCount((pre) => pre - 1)}>
+                      onClick={() => {
+                        if (ageCount !== 1) {
+                          setAgeCount((pre) => pre - 1);
+                        }
+                      }}>
                       <IoMdArrowDropupCircle />
                     </UserDetailToggleButton>
                   </UserDetailToggleButtonWrapper>
@@ -107,6 +118,7 @@ const FirstUserDetail = ({ next, data }: any) => {
                     textColor={theme.bodyColor}
                     border={`1px solid ${theme.buttonColor}`}
                     type="submit"
+                    disabled={!(isValid && dirty)}
                   />
                 </UserDetailButtonContainer>
                 <ToneImageAnimation>

@@ -145,3 +145,8 @@ export const ToneImage = styled.img`
   object-fit: contain;
   display: flex;
 `;
+
+export const ErrorMessageText = styled.div`
+  color: #ff0000;
+  font-size: 16px;
+`;

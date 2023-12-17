@@ -1,4 +1,4 @@
-import { Form, Formik } from "formik";
+import { ErrorMessage, Form, Formik } from "formik";
 import CheckBox from "../../components/checkBox/CheckBox";
 import {
   InputField,
@@ -16,6 +16,7 @@ import {
   ToneImage,
   TextLabel,
   ToneImageAnimation,
+  ErrorMessageText,
 } from "../../styles/sharedStyle";
 import Celebration from "../../assets/images/Celebration.png";
 import Button from "../../components/button/Button";
@@ -24,6 +25,7 @@ import { useRef, useState } from "react";
 import OTPModal from "../../components/otpModal/OTPModal";
 import { AuthCodeRef } from "react-auth-code-input";
 import tone from "../../assets/images/Yellow tone.png";
+import * as yup from "yup";
 interface I_Props {
   firstCheck: boolean;
   secondCheck: boolean;
@@ -35,7 +37,26 @@ interface I_Props {
 interface I_LoginProps {
   setIsLoggedIn(value: boolean): void;
 }
-
+const validationSchema = yup.object().shape({
+  name: yup
+    .string()
+    .trim()
+    .min(3, "Must be at least 3 words")
+    .max(20, "Must be at max 20 words")
+    .required("Name is required"),
+  email: yup
+    .string()
+    .email("Invalid email")
+    .trim()
+    .required("Email is required"),
+  phoneNo: yup
+    .string()
+    .trim()
+    .matches(/^[0-9]+$/, "Must be only digits")
+    .min(10, "Must be at least 10 digits")
+    .max(10, "Must be at max 10 digits")
+    .required("Phone number is required"),
+});
 const RegistrationPage = ({ setIsLoggedIn }: I_LoginProps) => {
   const [isOTPModalOpen, setIsOTPModalOpen] = useState<boolean>(false);
   const [confirmWalletPin, setConfirmWalletPin] = useState<string>("");
@@ -63,8 +84,11 @@ const RegistrationPage = ({ setIsLoggedIn }: I_LoginProps) => {
 
   return (
     <OpacityAnimation>
-      <Formik initialValues={initialValue} onSubmit={handleFormSubmit}>
-        {({ values, setFieldValue }) => {
+      <Formik
+        initialValues={initialValue}
+        onSubmit={handleFormSubmit}
+        validationSchema={validationSchema}>
+        {({ values, setFieldValue, isValid, dirty }) => {
           return (
             <Form>
               <RegistrationPageContainer>
@@ -87,6 +111,9 @@ const RegistrationPage = ({ setIsLoggedIn }: I_LoginProps) => {
                       placeholder="Phone Number"
                     />
                   </InputFieldContainer>
+                  <ErrorMessageText>
+                    <ErrorMessage name="phoneNo" />
+                  </ErrorMessageText>
                 </InputFieldMainContainer>
                 <InputFieldMainContainer>
                   <InputFieldLabel>Full Name:</InputFieldLabel>
@@ -97,6 +124,9 @@ const RegistrationPage = ({ setIsLoggedIn }: I_LoginProps) => {
                       placeholder="Full Name"
                     />
                   </InputFieldContainer>
+                  <ErrorMessageText>
+                    <ErrorMessage name="name" />
+                  </ErrorMessageText>
                 </InputFieldMainContainer>
                 <InputFieldMainContainer>
                   <InputFieldLabel>Email ID:</InputFieldLabel>
@@ -107,6 +137,9 @@ const RegistrationPage = ({ setIsLoggedIn }: I_LoginProps) => {
                       placeholder="Email ID"
                     />
                   </InputFieldContainer>
+                  <ErrorMessageText>
+                    <ErrorMessage name="email" />
+                  </ErrorMessageText>
                 </InputFieldMainContainer>
                 <div>
                   <CheckBox
@@ -137,7 +170,9 @@ const RegistrationPage = ({ setIsLoggedIn }: I_LoginProps) => {
                         values.firstCheck &&
                         values.secondCheck &&
                         values.name &&
-                        values.phoneNo
+                        values.phoneNo &&
+                        isValid &&
+                        dirty
                       )
                     }
                   />
