@@ -18,3 +18,10 @@ export const ButtonContainer = styled.button<{
     opacity: 0.6;
   }
 `;
+
+export const LoadingContainer = styled.span`
+  display: inline-block;
+  height: 100%;
+  width: 90px;
+  color: red;
+`;

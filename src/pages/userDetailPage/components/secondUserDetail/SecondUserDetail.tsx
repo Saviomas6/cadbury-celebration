@@ -8,17 +8,22 @@ import {
   UserDetailButtonContainer,
 } from "../../style";
 import {
+  OpacityAnimation,
   SelectEmojiLayoutContainer,
   SelectEmojiMainContainer,
   SelectEmojiMainWrapper,
   SelectEmojiText,
   TextLabel,
+  ToneImage,
+  ToneImageAnimation,
 } from "../../../../styles/sharedStyle";
 import Headphone from "../../../../assets/images/Headphone.png";
 import Button from "../../../../components/button/Button";
 import { theme } from "../../../../styles/theme";
 import SelectOuterBox from "../../../../components/selectOuterBox/SelectOuterBox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import tone from "../../../../assets/images/Yellow tone.png";
+import ballon from "../../../../assets/images/Balloon2.png";
 
 const genderData = [
   {
@@ -101,93 +106,115 @@ const genreData = [
   },
 ];
 
-const SecondUserDetail = () => {
+const SecondUserDetail = ({ next, data, isLoading }: any) => {
   const [isSingerSelected, setIsSingerSelected] = useState("male");
   const [isMoodSelected, setIsMoodSelected] = useState("happy");
   const [isGenreSelected, setIsGenreSelected] = useState("rap");
 
-  const initialValue = {};
-
-  const handleSubmitForm = () => {};
+  const handleSubmitForm = (values: any) => {
+    next(values, true);
+  };
   return (
-    <div>
-      <Formik initialValues={initialValue} onSubmit={handleSubmitForm}>
-        <Form>
-          <FirstUserDetailContainer>
-            <TextLabel>What would you like their song's vibe to be?</TextLabel>
-            <FirstUserDetailImageMainContainer>
-              <FirstUserDetailImageContainer>
-                <FirstUserDetailImage src={Headphone} alt="img" />
-              </FirstUserDetailImageContainer>
-            </FirstUserDetailImageMainContainer>
-            <SelectBoxMainWrapper>
-              <SelectOuterBox heading="Mood">
-                <SelectEmojiLayoutContainer>
-                  {moodData?.map((value) => (
-                    <SelectEmojiMainWrapper
-                      key={value.value}
-                      onClick={() => setIsMoodSelected(value.value)}>
-                      <SelectEmojiMainContainer
-                        valueSelected={value.value === isMoodSelected}>
-                        {value.img}
-                      </SelectEmojiMainContainer>
-                      <SelectEmojiText>{value.label}</SelectEmojiText>
-                    </SelectEmojiMainWrapper>
-                  ))}
-                </SelectEmojiLayoutContainer>
-              </SelectOuterBox>
-            </SelectBoxMainWrapper>
+    <OpacityAnimation>
+      <Formik initialValues={data} onSubmit={handleSubmitForm}>
+        {({ setFieldValue }) => {
+          useEffect(() => {
+            setFieldValue("singerVoice", isSingerSelected);
+          }, [isSingerSelected]);
+          useEffect(() => {
+            setFieldValue("mood", isMoodSelected);
+          }, [isMoodSelected]);
+          useEffect(() => {
+            setFieldValue("genre", isGenreSelected);
+          }, [isMoodSelected]);
+          return (
+            <Form>
+              <FirstUserDetailContainer>
+                <TextLabel>
+                  What would you like their song's vibe to be?
+                </TextLabel>
+                <FirstUserDetailImageMainContainer>
+                  <FirstUserDetailImageContainer>
+                    <FirstUserDetailImage src={Headphone} alt="img" />
+                  </FirstUserDetailImageContainer>
+                </FirstUserDetailImageMainContainer>
+                <SelectBoxMainWrapper>
+                  <SelectOuterBox heading="Mood">
+                    <SelectEmojiLayoutContainer>
+                      {moodData?.map((value) => (
+                        <SelectEmojiMainWrapper
+                          key={value.value}
+                          onClick={() => setIsMoodSelected(value.value)}>
+                          <SelectEmojiMainContainer
+                            valueSelected={value.value === isMoodSelected}>
+                            {value.img}
+                          </SelectEmojiMainContainer>
+                          <SelectEmojiText>{value.label}</SelectEmojiText>
+                        </SelectEmojiMainWrapper>
+                      ))}
+                    </SelectEmojiLayoutContainer>
+                  </SelectOuterBox>
+                </SelectBoxMainWrapper>
 
-            <SelectBoxMainWrapper>
-              <SelectOuterBox heading="Genre">
-                <SelectEmojiLayoutContainer>
-                  {genreData?.map((value) => (
-                    <SelectEmojiMainWrapper
-                      key={value.value}
-                      onClick={() => setIsGenreSelected(value.value)}>
-                      <SelectEmojiMainContainer
-                        valueSelected={value.value === isGenreSelected}>
-                        {value.img}
-                      </SelectEmojiMainContainer>
-                      <SelectEmojiText>{value.label}</SelectEmojiText>
-                    </SelectEmojiMainWrapper>
-                  ))}
-                </SelectEmojiLayoutContainer>
-              </SelectOuterBox>
-            </SelectBoxMainWrapper>
-            <SelectBoxMainWrapper>
-              <SelectOuterBox heading="Singer Voice">
-                <SelectEmojiLayoutContainer justifyContent="space-evenly">
-                  {genderData?.map((value) => (
-                    <SelectEmojiMainWrapper
-                      key={value.value}
-                      onClick={() => setIsSingerSelected(value.value)}>
-                      <SelectEmojiMainContainer
-                        width="80px"
-                        borderRadius="10px"
-                        valueSelected={value.value === isSingerSelected}>
-                        {value.img}
-                      </SelectEmojiMainContainer>
-                      <SelectEmojiText>{value.label}</SelectEmojiText>
-                    </SelectEmojiMainWrapper>
-                  ))}
-                </SelectEmojiLayoutContainer>
-              </SelectOuterBox>
-            </SelectBoxMainWrapper>
-            <UserDetailButtonContainer>
-              <Button
-                text="Proceed"
-                bgColor={theme.buttonColor}
-                textColor={theme.bodyColor}
-                border={`1px solid ${theme.buttonColor}`}
-                type="button"
-                onClick={() => {}}
-              />
-            </UserDetailButtonContainer>
-          </FirstUserDetailContainer>
-        </Form>
+                <SelectBoxMainWrapper>
+                  <SelectOuterBox heading="Genre">
+                    <SelectEmojiLayoutContainer>
+                      {genreData?.map((value) => (
+                        <SelectEmojiMainWrapper
+                          key={value.value}
+                          onClick={() => setIsGenreSelected(value.value)}>
+                          <SelectEmojiMainContainer
+                            valueSelected={value.value === isGenreSelected}>
+                            {value.img}
+                          </SelectEmojiMainContainer>
+                          <SelectEmojiText>{value.label}</SelectEmojiText>
+                        </SelectEmojiMainWrapper>
+                      ))}
+                    </SelectEmojiLayoutContainer>
+                  </SelectOuterBox>
+                </SelectBoxMainWrapper>
+                <SelectBoxMainWrapper>
+                  <SelectOuterBox heading="Singer Voice">
+                    <SelectEmojiLayoutContainer justifyContent="space-evenly">
+                      {genderData?.map((value) => (
+                        <SelectEmojiMainWrapper
+                          key={value.value}
+                          onClick={() => setIsSingerSelected(value.value)}>
+                          <SelectEmojiMainContainer
+                            width="80px"
+                            borderRadius="10px"
+                            valueSelected={value.value === isSingerSelected}>
+                            {value.img}
+                          </SelectEmojiMainContainer>
+                          <SelectEmojiText>{value.label}</SelectEmojiText>
+                        </SelectEmojiMainWrapper>
+                      ))}
+                    </SelectEmojiLayoutContainer>
+                  </SelectOuterBox>
+                </SelectBoxMainWrapper>
+                <UserDetailButtonContainer>
+                  <Button
+                    text="Proceed"
+                    bgColor={theme.buttonColor}
+                    textColor={theme.bodyColor}
+                    border={`1px solid ${theme.buttonColor}`}
+                    disabled={isLoading}
+                    isLoading={isLoading}
+                    type="submit"
+                  />
+                </UserDetailButtonContainer>
+                <ToneImageAnimation>
+                  <ToneImage src={tone} alt="img" />
+                </ToneImageAnimation>
+                <ToneImageAnimation top="100px" left="0px">
+                  <ToneImage src={ballon} alt="img" />
+                </ToneImageAnimation>
+              </FirstUserDetailContainer>
+            </Form>
+          );
+        }}
       </Formik>
-    </div>
+    </OpacityAnimation>
   );
 };
 

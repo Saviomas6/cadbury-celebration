@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
 import { Field } from "formik";
+import { bounce, zoomInOut } from "../../styles/sharedStyle";
 
 export const RegistrationPageContainer = styled.div`
-  /* ... */
+  position: relative;
 `;
 export const RegistrationPageImageWrapper = styled.div`
   display: flex;
@@ -20,6 +21,7 @@ export const RegistrationPageImage = styled.img`
   width: 100%;
   object-fit: contain;
   display: flex;
+  animation: ${zoomInOut} 8s infinite alternate;
 `;
 
 export const InputFieldMainContainer = styled.div`

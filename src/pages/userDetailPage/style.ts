@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
 import { Field } from "formik";
+import { zoomInOut } from "../../styles/sharedStyle";
 
 export const FirstUserDetailContainer = styled.div`
   padding: 20px 0;
@@ -21,6 +22,7 @@ export const FirstUserDetailImage = styled.img`
   width: 100%;
   object-fit: cover;
   display: flex;
+  animation: ${zoomInOut} 8s infinite alternate;
 `;
 
 export const InputFieldMainContainer = styled.div`

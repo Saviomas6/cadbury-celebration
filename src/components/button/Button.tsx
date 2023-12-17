@@ -1,5 +1,6 @@
-import { ButtonContainer } from "./style";
-
+import { ButtonContainer, LoadingContainer } from "./style";
+import whiteLoading from "../../assets/images/whiteLoader.json";
+import Lottie from "react-lottie";
 interface I_Props {
   bgColor?: string;
   border?: string;
@@ -18,7 +19,16 @@ const Button = ({
   disabled,
   type,
   textColor,
+  isLoading,
 }: I_Props) => {
+  const defaultErrorOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: whiteLoading,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
   return (
     <ButtonContainer
       type={type}
@@ -27,7 +37,13 @@ const Button = ({
       border={border}
       textColor={textColor}
       onClick={onClick}>
-      {text}
+      {isLoading ? (
+        <LoadingContainer>
+          <Lottie options={defaultErrorOptions} />
+        </LoadingContainer>
+      ) : (
+        text
+      )}
     </ButtonContainer>
   );
 };

@@ -15,3 +15,10 @@ export const LyricsTextContainer = styled.div`
   overflow: auto;
   margin-top: 20px;
 `;
+
+export const HomePageButtonContainer = styled.div`
+  display: grid;
+  grid-template-columns: 180px;
+  margin-top: 20px;
+  justify-content: center;
+`;

@@ -1,33 +1,43 @@
-import { TextLabel } from "../../styles/sharedStyle";
-import { LyricsPageContainer, LyricsTextContainer } from "./style";
+import Button from "../../components/button/Button";
+import { OpacityAnimation, TextLabel } from "../../styles/sharedStyle";
+import { theme } from "../../styles/theme";
+import {
+  HomePageButtonContainer,
+  LyricsPageContainer,
+  LyricsTextContainer,
+} from "./style";
 
-const LyricsPage = () => {
+interface I_Props {
+  text: string;
+  setIsLyricsGenerated(value: boolean): void;
+  setCurrentForm(value: number): void;
+}
+
+const LyricsPage = ({
+  text,
+  setIsLyricsGenerated,
+  setCurrentForm,
+}: I_Props) => {
   return (
-    <LyricsPageContainer>
-      <TextLabel>Your song lyrics are ready!</TextLabel>
-      <LyricsTextContainer>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae voluptas
-        blanditiis esse reprehenderit. Odit ipsum possimus eos distinctio error
-        ipsam, quas molestias est quidem, laborum dolore voluptate nisi natus
-        pariatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae
-        voluptas blanditiis esse reprehenderit. Odit ipsum possimus eos
-        distinctio error ipsam, quas molestias est quidem, laborum dolore
-        voluptate nisi natus pariatur. Lorem ipsum dolor sit amet consectetur
-        adipisicing elit. Vitae voluptas blanditiis esse reprehenderit. Odit
-        ipsum possimus eos distinctio error ipsam, quas molestias est quidem,
-        laborum dolore voluptate nisi natus pariatur. Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Vitae voluptas blanditiis esse
-        reprehenderit. Odit ipsum possimus eos distinctio error ipsam, quas
-        molestias est quidem, laborum dolore voluptate nisi natus pariatur.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae voluptas
-        blanditiis esse reprehenderit. Odit ipsum possimus eos distinctio error
-        ipsam, quas molestias est quidem, laborum dolore voluptate nisi natus
-        pariatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae
-        voluptas blanditiis esse reprehenderit. Odit ipsum possimus eos
-        distinctio error ipsam, quas molestias est quidem, laborum dolore
-        voluptate nisi natus pariatur.
-      </LyricsTextContainer>
-    </LyricsPageContainer>
+    <OpacityAnimation>
+      <LyricsPageContainer>
+        <TextLabel>Your song lyrics are ready!</TextLabel>
+        <LyricsTextContainer>{text}</LyricsTextContainer>
+        <HomePageButtonContainer>
+          <Button
+            text="Generate Again"
+            bgColor={theme.buttonColor}
+            textColor={theme.bodyColor}
+            border={`1px solid ${theme.buttonColor}`}
+            type="button"
+            onClick={() => {
+              setCurrentForm(0);
+              setIsLyricsGenerated(false);
+            }}
+          />
+        </HomePageButtonContainer>
+      </LyricsPageContainer>
+    </OpacityAnimation>
   );
 };
 

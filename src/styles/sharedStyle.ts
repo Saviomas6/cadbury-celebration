@@ -35,6 +35,24 @@ const opacityAnimation = keyframes`
   }
 `;
 
+export const bounce = keyframes`
+   0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+`;
+
+export const zoomInOut = keyframes`
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+`;
+
 export const OpacityAnimation = styled.div<any>`
   animation: ${opacityAnimation} 1.5s;
 `;
@@ -111,4 +129,19 @@ export const SelectEmojiText = styled.div`
   font-weight: 500;
   color: ${theme.white};
   text-align: center;
+`;
+export const ToneImageAnimation = styled.div<any>`
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  top: ${({ top }) => top || "50px"};
+  right: ${({ right }) => right || "0px"};
+  left: ${({ left }) => left};
+  animation: ${bounce} 2s infinite alternate;
+`;
+export const ToneImage = styled.img`
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  display: flex;
 `;

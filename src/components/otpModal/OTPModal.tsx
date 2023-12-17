@@ -15,6 +15,7 @@ interface I_Props {
   setConfirmWalletPin(value: string): void;
   authInputRef: any;
   confirmWalletPin?: any;
+  setIsLoggedIn(value: boolean): void;
 }
 
 const OTPModal = ({
@@ -22,6 +23,7 @@ const OTPModal = ({
   setConfirmWalletPin,
   authInputRef,
   confirmWalletPin,
+  setIsLoggedIn,
 }: I_Props) => {
   const handleOnChange = (res: string) => {
     setConfirmWalletPin(res);
@@ -36,6 +38,7 @@ const OTPModal = ({
   const handlePinSubmit = () => {
     if (confirmWalletPin === "1234") {
       alert("Successfully Logged in");
+      setIsLoggedIn(true);
       toggleModal(false);
     } else {
       alert("Incorrect Pin");
