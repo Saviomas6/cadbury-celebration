@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
 import { Field } from "formik";
-import { bounce, zoomInOut } from "../../styles/sharedStyle";
+import { zoomInOut } from "../../styles/sharedStyle";
 
 export const RegistrationPageContainer = styled.div`
   position: relative;
