@@ -47,7 +47,7 @@ The lyrics generated should be completely unique and never written before every 
     if (final) {
       setLoading(true);
       const llm = new OpenAI({
-        openAIApiKey: "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",
+        openAIApiKey: "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",
         temperature: 0.9,
       });
 
